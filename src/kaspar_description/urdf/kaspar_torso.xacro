@@ -1,11 +1,17 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-	
+
 	<xacro:macro name="torso_v0" params="name parent *origin">
-		<joint name="${name}_joint" type="fixed">
+		<xacro:mount name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
-			<parent link="${parent}_link" />
+		</xacro:mount>
+
+		<joint name="${name}_joint" type="revolute">
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<parent link="${name}_mount_link" />
 			<child link="${name}_link" />
+			<axis xyz="0 0 1" />
+			<limit effort="0" lower="-1.5707" upper="1.5707" velocity="1" />
 		</joint>
 		<link name="${name}_link">
 			<inertial>
@@ -18,18 +24,18 @@
 				<geometry>
 					<cylinder length="0.15" radius="0.08" />
 				</geometry>
-				<material name="white" />
+				<material name="shell" />
 			</visual>
 			<collision>
-				<origin xyz="0 0 0.05" rpy="0 0 0" />
+				<origin xyz="0 0 0.08" rpy="0 0 0" />
 				<geometry>
 					<cylinder length="0.15" radius="0.08" />
 				</geometry>
 			</collision>
 		</link>
-		
+
 		<xacro:mount name="${name}_top" parent="${name}">
-			<origin rpy="0 0 0" xyz="0 0 0.15" />
+			<origin rpy="0 0 0" xyz="0 0 0.155" />
 		</xacro:mount>
 		<xacro:mount name="${name}_arm_l" parent="${name}">
 			<origin rpy="-1.57079 0 0" xyz="0 0.08 0.12" />

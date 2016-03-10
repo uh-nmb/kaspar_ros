@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="head_v0" params="name parent *origin">
+	</xacro:macro>
+
+	<xacro:macro name="neck_v0" params="name parent *origin">
+		<xacro:mount name="${name}_top" parent="${name}">
+			<origin rpy="0 0 0" xyz="0 0 0.05" />
+		</xacro:mount>
+	</xacro:macro>
 
 	<xacro:macro name="eye" params="name parent *origin">
 		<joint name="${name}_joint" type="fixed">

@@ -1,7 +1,20 @@
 <?xml version="1.0"?>
 <robot>
+
+	<material name="trousers">
+		<color rgba="0.0 0.0 0.8 1.0" />
+	</material>
+
+	<material name="shell">
+		<color rgba="1.0 1.0 1.0 0.25" />
+	</material>
+
 	<material name="mount">
-		<color rgba="0.08 0.08 0.08 1.0" />
+		<color rgba="0.2 0.2 0.2 0.75" />
+	</material>
+	
+	<material name="skin">
+		<color rgba="${255/255} ${217/255} ${15/255} 0.95" />
 	</material>
 
 	<material name="black">

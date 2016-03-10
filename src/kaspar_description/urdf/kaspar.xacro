@@ -6,15 +6,15 @@
 	<xacro:property name="mass" value="10" />
 
 	<!-- Import joint description -->
-	<xacro:include filename="$(find dynamixel_description)/urdf/dynamixel_ax12.xacro" />
-	<xacro:include filename="$(find dynamixel_description)/urdf/fp04_02.xacro" />
+	<xacro:include filename="$(find herkulex_description)/urdf/drs_x01.xacro" />
+	<xacro:include filename="$(find herkulex_description)/urdf/mount.xacro" />
 
 	<!-- Import individual part macros -->
 	<xacro:include filename="$(find kaspar_description)/urdf/kaspar_arm.xacro" />
 	<xacro:include filename="$(find kaspar_description)/urdf/kaspar_base.xacro" />
 	<xacro:include filename="$(find kaspar_description)/urdf/kaspar_head.xacro" />
 	<xacro:include filename="$(find kaspar_description)/urdf/kaspar_torso.xacro" />
-	
+
 	<xacro:include filename="$(find kaspar_description)/urdf/kaspar_mount.xacro" />
 	<xacro:include filename="$(find kaspar_description)/urdf/materials.xacro" />
 
@@ -27,19 +27,36 @@
 	<xacro:leg_v0 name="leg_l" parent="base_leg_l">
 		<origin rpy="0 0 0" xyz="0 0 0" />
 	</xacro:leg_v0>
+	<xacro:foot_v0 name="foot_l" parent="leg_l_foot">
+		<origin rpy="0 0 0" xyz="0 0 0" />
+	</xacro:foot_v0>
 	<xacro:leg_v0 name="leg_r" parent="base_leg_r">
 		<origin rpy="0 0 0" xyz="0 0 0" />
 	</xacro:leg_v0>
-
-	<joint name="base_torso_joint" type="revolute">
-		<parent link="base_top_link" />
-		<child link="base_torso_joint_link" />
-		<axis xyz="0 0 1" />
-		<limit effort="0" lower="-1.5707" upper="1.5707" velocity="1" />
-	</joint>
-	<link name="base_torso_joint_link" />
-
-	<xacro:torso_v0 name="torso" parent="base_torso_joint">
+	<xacro:foot_v0 name="foot_r" parent="leg_r_foot">
+		<origin rpy="0 0 0" xyz="0 0 0" />
+	</xacro:foot_v0>
+	<xacro:torso_v0 name="torso" parent="base_top">
 		<origin rpy="0 0 0" xyz="0 0 0" />
 	</xacro:torso_v0>
+	<xacro:arm_v0 name="arm_r" parent="torso_arm_r">
+		<origin rpy="0 0 0" xyz="0 0 0" />
+	</xacro:arm_v0>
+	<!-- 
+	<xacro:hand_v0 name="hand_r" parent="torso_arm_r_hand">
+		<origin rpy="0 0 0" xyz="0 0 0" />
+	</xacro:hand_v0>
+	<xacro:arm_v0 name="arm_l" parent="torso_arm_l">
+		<origin rpy="0 0 0" xyz="0 0 0" />
+	</xacro:arm_v0>
+	<xacro:hand_v0 name="hand_l" parent="torso_arm_l_hand">
+		<origin rpy="0 0 0" xyz="0 0 0" />
+	</xacro:hand_v0>
+
+	<xacro:neck_v0 name="neck" parent="torso_top">
+		<origin rpy="0 0 0" xyz="0 0 0" />
+	</xacro:neck_v0>
+	<xacro:head_v0 name="head" parent="neck_top">
+		<origin rpy="0 0 0" xyz="0 0 0" />
+	</xacro:head_v0> -->
 </robot>
