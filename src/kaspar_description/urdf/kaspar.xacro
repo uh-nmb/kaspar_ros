@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <robot name="kaspar" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<!-- Constants for robot dimensions -->
+	<!-- Constants -->
 	<xacro:property name="PI" value="3.1415926535897931" />
-	<xacro:property name="mass" value="10" />
 
 	<!-- Import joint description -->
 	<xacro:include filename="$(find herkulex_description)/urdf/drs_x01.xacro" />
@@ -42,14 +41,13 @@
 	<xacro:arm_v0 name="arm_r" parent="torso_arm_r">
 		<origin rpy="0 0 0" xyz="0 0 0" />
 	</xacro:arm_v0>
-	<!-- 
-	<xacro:hand_v0 name="hand_r" parent="torso_arm_r_hand">
+	<xacro:hand_v0 name="hand_r" parent="arm_r_hand">
 		<origin rpy="0 0 0" xyz="0 0 0" />
 	</xacro:hand_v0>
 	<xacro:arm_v0 name="arm_l" parent="torso_arm_l">
-		<origin rpy="0 0 0" xyz="0 0 0" />
+		<origin rpy="0 0 ${PI}" xyz="0 0 0" />
 	</xacro:arm_v0>
-	<xacro:hand_v0 name="hand_l" parent="torso_arm_l_hand">
+	<xacro:hand_v0 name="hand_l" parent="arm_l_hand">
 		<origin rpy="0 0 0" xyz="0 0 0" />
 	</xacro:hand_v0>
 
@@ -58,5 +56,12 @@
 	</xacro:neck_v0>
 	<xacro:head_v0 name="head" parent="neck_top">
 		<origin rpy="0 0 0" xyz="0 0 0" />
-	</xacro:head_v0> -->
+	</xacro:head_v0>
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/kaspar</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
 </robot>

@@ -1,92 +1,55 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:macro name="head_v0" params="name parent *origin">
+		<xacro:mount_point name="${name}_mount" parent="${parent}">
+			<insert_block name="origin" />
+		</xacro:mount_point>
+		
+		<joint name="${name}_joint" type="fixed">
+			<origin rpy="0 0 0" xyz="0 0 0.09" />
+			<parent link="${name}_mount_link" />
+			<child link="${name}_link" />
+		</joint>
+		<link name="${name}_link">
+			<visual>
+				<geometry>
+					<sphere radius="0.08" />
+				</geometry>
+				<material name="skin" />
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.08" />
+				</geometry>
+			</collision>
+		</link>
+		
+		<xacro:mount_point name="${name}_top" parent="${name}">
+			<origin xyz="0 0 0.08" rpy="0 0 0" />
+		</xacro:mount_point>
+		
+		<gazebo reference="${name}_link">
+			<material>Gazebo/Yellow</material>
+		</gazebo>
 	</xacro:macro>
 
 	<xacro:macro name="neck_v0" params="name parent *origin">
-		<xacro:mount name="${name}_top" parent="${name}">
-			<origin rpy="0 0 0" xyz="0 0 0.05" />
-		</xacro:mount>
-	</xacro:macro>
-
-	<xacro:macro name="eye" params="name parent *origin">
-		<joint name="${name}_joint" type="fixed">
+		<xacro:mount_point name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
-			<parent link="${parent}_link" />
-			<child link="${name}_link" />
-		</joint>
-		<link name="${name}_link">
-			<inertial>
-				<mass value="0.01" />
-				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
-			</inertial>
-			<visual>
-				<origin rpy="0 1.5707 0" />
-				<geometry>
-					<cylinder length="0.015" radius="0.03" />
-				</geometry>
-				<material name="white">
-					<color rgba="0.98 0.98 0.90 1.0" />
-				</material>
-			</visual>
-			<collision>
-				<origin rpy="0 1.5707 0" />
-				<geometry>
-					<cylinder length="0.015" radius="0.03" />
-				</geometry>
-			</collision>
-		</link>
-		<gazebo reference="${name}_link">
-			<material>Gazebo/White</material>
-		</gazebo>
-	</xacro:macro>
+		</xacro:mount_point>
 
-	<xacro:macro name="head" params="name parent *origin">
-		<joint name="${name}_mount_joint" type="fixed">
-			<insert_block name="origin" />
-			<parent link="${parent}_link" />
-			<child link="${name}_mount_link" />
-		</joint>
-		<link name="${name}_mount_link"></link>
-		<joint name="${name}_joint" type="fixed">
-			<parent link="${name}_mount_link" />
-			<child link="${name}_link" />
-			<origin rpy="0 0 0 " xyz="0 0 -0.0475" />
-		</joint>
-		<link name="${name}_link">
-			<inertial>
-				<mass value="0.1" />
-				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
-			</inertial>
-			<visual>
-				<geometry>
-					<cylinder length="0.10" radius="0.11" />
-				</geometry>
-				<material name="grey">
-					<color rgba="0.5 0.5 0.5 1.0" />
-				</material>
-			</visual>
-			<collision>
-				<geometry>
-					<cylinder length="0.10" radius="0.11" />
-				</geometry>
-			</collision>
-		</link>
-		<gazebo reference="${name}_link">
-			<material>Gazebo/Grey</material>
-		</gazebo>
+		<xacro:drs_x01 name="${name}_0" mountBottom="false" mountBack="true" mountAxel="false" parent="${name}_mount" minPosition="${PI}"
+			maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" />
+		</xacro:drs_x01>
+		<xacro:drs_x01 name="${name}_1" parent="${name}_0_axel" mountBottom="true" mountBack="false" mountAxel="false" minPosition="${PI}"
+			maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" rpy="0 0 ${PI}" />
+		</xacro:drs_x01>
+		<xacro:mount_v0 name="${name}_top" parent="${name}_1_axel">
+			<origin rpy="0 0 0" xyz="0 0 0" />
+		</xacro:mount_v0>
 
-		<xacro:eye name="eye_r" parent="${name}">
-			<origin rpy="0 0 -0.23" xyz="0.12 -0.06 0" />
-		</xacro:eye>
-
-		<xacro:eye name="eye_l" parent="${name}">
-			<origin rpy="0 0 0.23" xyz="0.12 0.06 0" />
-		</xacro:eye>
-
-		<xacro:simple_camera name="camera" parent="${name}">
-			<origin rpy="0 0 0" xyz="0.11 0.00 -0.02" />
-		</xacro:simple_camera>
 	</xacro:macro>
 
 </robot>

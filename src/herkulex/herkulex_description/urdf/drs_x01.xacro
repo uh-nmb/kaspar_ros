@@ -2,26 +2,23 @@
 <robot xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller" xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
 	xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<xacro:macro name="drs_x01" params="name parent mountTop mountBottom mountBack mountAxel minPosition maxPosition maxVelocity *origin">
-		<xacro:mount name="${name}_mount" parent="${parent}">
+	<xacro:macro name="drs_x01" params="name parent mountBottom mountBack mountAxel minPosition maxPosition maxVelocity *origin">
+		<xacro:mount_point name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
-		</xacro:mount>
+		</xacro:mount_point>
 
-		<xacro:__drs_x01_box skipBottom="${mountBottom}" skipTop="${mountTop}" skipAxel="${mountAxel}" skipBack="${mountBack}"
+		<xacro:__drs_x01_box skipBottom="${mountBottom}" skipAxel="${mountAxel}" skipBack="${mountBack}"
 			name="${name}" />
 
 		<joint name="${name}_box_joint" type="fixed">
 			<xacro:if value="${mountBack}">
-				<origin xyz="0 0 0.019" rpy="1.57079 0 -1.57079" />
+				<origin xyz="0 0 0.019" rpy="${PI / 2} 0 -${PI / 2}" />
 			</xacro:if>
 			<xacro:if value="${mountBottom}">
-				<origin xyz="0.025 0 0" rpy="0 1.57079 0" />
-			</xacro:if>
-			<xacro:if value="${mountTop}">
-				<origin xyz="-0.025 0 0" rpy="0 -1.57079 0" />
+				<origin xyz="0 0 0.025" rpy="0 ${PI / 2} 0" />
 			</xacro:if>
 			<xacro:if value="${mountAxel}">
-				<origin xyz="-0.012 0 0.019" rpy="1.57079 0 0" />
+				<origin xyz="-0.012 0 0.019" rpy="${PI / 2} 0 0" />
 			</xacro:if>
 
 			<xacro:if value="${mountAxel}">
@@ -34,7 +31,7 @@
 		</joint>
 
 		<xacro:__drs_x01_axel name="${name}" mountAxel="${mountAxel}" />
-		<joint name="${name}_axel_box_joint" type="revolute">
+		<joint name="${name}_joint" type="revolute">
 			<xacro:if value="${mountAxel}">
 				<parent link="${name}_axel_box_link" />
 				<child link="${name}_box_axel_link" />
@@ -46,17 +43,19 @@
 				<origin xyz="0 0 0" rpy="0 0 0" />
 			</xacro:unless>
 			<axis xyz="0 0 1" />
-			<limit effort="0" lower="-1.5707" upper="1.5707" velocity="1" />
+
+			<limit effort="100" velocity="${maxVelocity}" lower="${minPosition}" upper="${maxPosition}" />
+			<dynamics friction="0.01" damping="0.01" />
 		</joint>
 
 		<!-- Gazebo Config -->
 		<transmission name="${name}_trans">
 			<type>transmission_interface/SimpleTransmission</type>
 			<joint name="${name}_joint">
-				<hardwareInterface>PositionJointInterface</hardwareInterface>
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
 			</joint>
 			<actuator name="${name}_motor">
-				<hardwareInterface>PositionJointInterface</hardwareInterface>
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
 				<mechanicalReduction>1</mechanicalReduction>
 			</actuator>
 		</transmission>
@@ -69,17 +68,18 @@
 		</gazebo>
 	</xacro:macro>
 
-	<xacro:macro name="__drs_x01_box" params="name skipBack skipBottom skipTop skipAxel">
+	<xacro:macro name="__drs_x01_box" params="name skipBack skipBottom skipAxel">
 		<link name="${name}_box_link">
 			<visual>
-				<geometry name="x01">
-					<box size="0.050 0.038 0.032" />
+				<geometry name="x01mesh">
+					<mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001" />
 				</geometry>
 				<material name="plastic_black" />
+				<origin rpy="${PI} 0 0" xyz="0 0 0" />
 			</visual>
 			<inertial>
-				<mass value="0.01" />
-				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+				<mass value="0.001" />
+				<inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
 			</inertial>
 			<collision>
 				<geometry name="x01">
@@ -89,34 +89,30 @@
 		</link>
 
 		<xacro:unless value="${skipBack}">
-			<xacro:mount name="${name}_box_back" parent="${name}_box">
-				<origin xyz="0 0.019 0" rpy="1.57079 0 0" />
-			</xacro:mount>
+			<xacro:mount_point name="${name}_box_back" parent="${name}_box">
+				<origin xyz="0 -0.019 0" rpy="${PI / 2} 0 0" />
+			</xacro:mount_point>
 		</xacro:unless>
 		<xacro:unless value="${skipBottom}">
-			<xacro:mount name="${name}_box_bottom" parent="${name}_box">
-				<origin xyz="0.025 0 0" rpy="0 1.57079 0" />
-			</xacro:mount>
-		</xacro:unless>
-		<xacro:unless value="${skipTop}">
-			<xacro:mount name="${name}_box_top" parent="${name}_box">
-				<origin xyz="-0.025 0 0" rpy="0 -1.57079 0" />
-			</xacro:mount>
+			<xacro:mount_point name="${name}_box_bottom" parent="${name}_box">
+				<origin xyz="0.025 0 0" rpy="0 ${PI / 2} 0" />
+			</xacro:mount_point>
 		</xacro:unless>
 		<xacro:unless value="${skipAxel}">
-			<xacro:mount name="${name}_box_axel" parent="${name}_box">
-				<origin xyz="-0.012 0.019 0" rpy="1.57075 0 3.14159" />
-			</xacro:mount>
+			<xacro:mount_point name="${name}_box_axel" parent="${name}_box">
+				<origin xyz="-0.012 0.019 0" rpy="${PI / 2} 0 ${PI}" />
+			</xacro:mount_point>
 		</xacro:unless>
 		<xacro:if value="${skipAxel}">
 			<link name="${name}_box_axel_link">
-			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<cylinder length="0.001" radius="0.01" />
-				</geometry>
-				<material name="orange" />
-			</visual></link>
+				<visual>
+					<origin xyz="0 0 0" rpy="0 0 0" />
+					<geometry>
+						<cylinder length="0.001" radius="0.01" />
+					</geometry>
+					<material name="orange" />
+				</visual>
+			</link>
 		</xacro:if>
 	</xacro:macro>
 
@@ -140,67 +136,19 @@
 		</link>
 
 		<xacro:if value="${mountAxel}">
-			<xacro:mount name="${name}_axel" parent="${name}_mount">
+			<xacro:mount_point name="${name}_axel" parent="${name}_mount">
 				<origin xyz="0 0 -0.0025" rpy="0 0 0" />
-			</xacro:mount>
+			</xacro:mount_point>
 			<joint name="${name}_axel0_joint" type="fixed">
 				<parent link="${name}_axel_link" />
 				<child link="${name}_axel_box_link" />
-				<origin xyz="0 0 0" rpy="0 0 1.57079" />
+				<origin xyz="0 0 0" rpy="0 0 ${PI / 2}" />
 			</joint>
 		</xacro:if>
 		<xacro:unless value="${mountAxel}">
-			<xacro:mount name="${name}_axel" parent="${name}_axel_box">
-				<origin xyz="0 0 0.0025" rpy="0 0 1.57079" />
-			</xacro:mount>
+			<xacro:mount_point name="${name}_axel" parent="${name}_axel_box">
+				<origin xyz="0 0 0.0025" rpy="0 0 ${PI / 2}" />
+			</xacro:mount_point>
 		</xacro:unless>
-	</xacro:macro>
-
-	<xacro:macro name="drs_x01_axel" params="name parent minPosition maxPosition maxVelocity *origin">
-		<xacro:mount name="${name}_mount" parent="${parent}">
-			<insert_block name="origin" />
-		</xacro:mount>
-
-		<xacro:__drs_x01_box skip="" name="${name}" />
-		<xacro:__drs_x01_axel name="${name}" />
-
-		<joint name="${name}_axel_joint" type="fixed">
-			<origin rpy="0 0 0" xyz="0 0 0" />
-			<parent link="${name}_mount_link" />
-			<child link="${name}_axel_link" />
-		</joint>
-		<joint name="${name}_joint" type="fixed">
-			<parent link="${name}_axel_link" />
-			<child link="${name}_box_axel0_link" />
-			<origin xyz="0 0 -0.001" rpy="0 0 0" />
-			<axis xyz="0 0 1" />
-			<limit effort="0" lower="-1.5707" upper="1.5707" velocity="1" />
-		</joint>
-		<link name="${name}_box_axel_link">
-		</link>
-		<joint name="${name}_axel_joint" type="fixed">
-			<parent link="${name}_box_axel_link" />
-			<child link="${name}_box_link" />
-			<origin xyz="-0.012 0 0.025" rpy="1.57075 0 3.14159" />
-		</joint>
-
-		<!-- Gazebo Config -->
-		<transmission name="${name}_trans">
-			<type>transmission_interface/SimpleTransmission</type>
-			<joint name="${name}_joint">
-				<hardwareInterface>PositionJointInterface</hardwareInterface>
-			</joint>
-			<actuator name="${name}_motor">
-				<hardwareInterface>PositionJointInterface</hardwareInterface>
-				<mechanicalReduction>1</mechanicalReduction>
-			</actuator>
-		</transmission>
-
-		<gazebo reference="${name}_box_link">
-			<material>Gazebo/FlatBlack</material>
-		</gazebo>
-		<gazebo reference="${name}_box_axel_link">
-			<material>Gazebo/White</material>
-		</gazebo>
 	</xacro:macro>
 </robot>

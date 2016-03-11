@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:macro name="leg_v0" params="name parent *origin">
-		<xacro:mount name="${name}_mount" parent="${parent}">
+		<xacro:mount_point name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
-		</xacro:mount>
-		
+		</xacro:mount_point>
+
 		<joint name="${name}_joint" type="fixed">
 			<origin rpy="0 0 0" xyz="0 0 0" />
 			<parent link="${name}_mount_link" />
@@ -12,8 +12,8 @@
 		</joint>
 		<link name="${name}_link">
 			<inertial>
-				<mass value="0.1" />
-				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+				<mass value="1" />
+				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
 			</inertial>
 			<visual>
 				<origin xyz="0 0 0.05" rpy="0 0 0" />
@@ -29,30 +29,30 @@
 				</geometry>
 			</collision>
 		</link>
-		
-		<xacro:mount name="${name}_foot" parent="${name}">
+
+		<xacro:mount_point name="${name}_foot" parent="${name}">
 			<origin rpy="0 0 0" xyz="0 0 0.10" />
-		</xacro:mount>
-		
+		</xacro:mount_point>
+
 		<gazebo reference="${name}_link">
 			<material>Gazebo/Blue</material>
 		</gazebo>
-	</xacro:macro>	
+	</xacro:macro>
 
 	<xacro:macro name="foot_v0" params="name parent *origin">
-		<xacro:mount name="${name}_mount" parent="${parent}">
+		<xacro:mount_point name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
-		</xacro:mount>
-		
+		</xacro:mount_point>
+
 		<joint name="${name}_ankle_joint" type="fixed">
-			<origin rpy="0 -1.57079 0" xyz="-0.0125 0 0.025" />
+			<origin rpy="0 -${PI / 2} 0" xyz="-0.0125 0 0.025" />
 			<parent link="${name}_mount_link" />
 			<child link="${name}_link" />
 		</joint>
 		<link name="${name}_link">
 			<inertial>
-				<mass value="0.01" />
-				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+				<mass value="0.5" />
+				<inertia ixx="0.5" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="0.5" />
 			</inertial>
 			<visual>
 				<origin xyz="0 0 0" rpy="0 0 0" />
@@ -68,10 +68,10 @@
 				</geometry>
 			</collision>
 		</link>
-		<xacro:mount name="${name}_toe" parent="${name}">
+		<xacro:mount_point name="${name}_toe" parent="${name}">
 			<origin rpy="0 0 0" xyz="0 0 0.0375" />
-		</xacro:mount>
-		
+		</xacro:mount_point>
+
 		<gazebo reference="${name}_link">
 			<material>Gazebo/Yellow</material>
 		</gazebo>
@@ -82,12 +82,12 @@
 			<insert_block name="origin" />
 			<parent link="${parent}_link" />
 			<child link="${name}_link" />
-		</joint>		
+		</joint>
 		<link name="${name}_link">
 			<inertial>
-				<mass value="5" />
 				<origin xyz="0 0 0.05" rpy="0 0 0" />
-				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+				<mass value="5" />
+				<inertia ixx="5.0" ixy="0.0" ixz="0.0" iyy="5.0" iyz="0.0" izz="5.0" />
 			</inertial>
 			<visual>
 				<origin xyz="0 0 0.05" rpy="0 0 0" />
@@ -103,16 +103,16 @@
 				</geometry>
 			</collision>
 		</link>
-		<xacro:mount name="${name}_top" parent="${name}">
+		<xacro:mount_point name="${name}_top" parent="${name}">
 			<origin rpy="0 0 0" xyz="0 0 0.10" />
-		</xacro:mount>
-		<xacro:mount name="${name}_leg_l" parent="${name}">
+		</xacro:mount_point>
+		<xacro:mount_point name="${name}_leg_l" parent="${name}">
 			<origin rpy="0 ${PI / 2} ${PI / 4}" xyz="0.053033009 0.053033009 0.03" />
-		</xacro:mount>
-		<xacro:mount name="${name}_leg_r" parent="${name}">
+		</xacro:mount_point>
+		<xacro:mount_point name="${name}_leg_r" parent="${name}">
 			<origin rpy="0 ${PI / 2} -${PI / 4}" xyz="0.053033009 -0.053033009 0.03" />
-		</xacro:mount>
-		
+		</xacro:mount_point>
+
 		<gazebo reference="${name}_link">
 			<material>Gazebo/Blue</material>
 		</gazebo>

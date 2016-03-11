@@ -1,38 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<robot 
-	xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-	xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-	xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-	xmlns:xacro="http://ros.org/wiki/xacro">
-	<xacro:macro name="fp04_02" params="name parent">
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="mount_v0" params="name parent *origin">
+		<xacro:mount_point name="${name}_mount" parent="${parent}">
+			<insert_block name="origin" />
+		</xacro:mount_point>
+
 		<link name="${name}_mesh_link">
 			<visual>
-				<geometry name="fp04_02mesh">
-					<mesh filename="package://dynamixel_description/meshes/F2.stl" scale="0.001 0.001 0.001" />
+				<geometry name="mount_mesh">
+					<mesh filename="package://herkulex_description/meshes/mount.stl" scale="0.001 0.001 0.001" />
 				</geometry>
-				<material name="plastic_green">
-					<color rgba="0.1 0.8 0.3 1" />
-				</material>
-				<origin rpy="-1.57075 0 1.57075" xyz="0 0 0.0" />
+				<material name="plastic_green" />
 			</visual>
 			<inertial>
 				<mass value="0.005" />
-				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0"
-					izz="0.001" />
-				<origin rpy="0 0 0" xyz="0 0 0.0025" />
+				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
 			</inertial>
 		</link>
-		<link name="${name}_link"></link>
-		<joint name="${name}_joint" type="fixed">
-			<parent link="${name}_mesh_link" />
-			<child link="${name}_link" />
-			<origin xyz="0 0 0.027" />
-		</joint>
+
 		<joint name="${name}_mesh_joint" type="fixed">
-			<parent link="${parent}_link" />
+			<parent link="${name}_mount_link" />
 			<child link="${name}_mesh_link" />
-			<origin xyz="-0.015 0 0" />
+			<origin rpy="${PI} 0 0" xyz="0 0 -0.0205" />
 		</joint>
+
+		<xacro:mount_point name="${name}" parent="${name}_mesh">
+			<origin xyz="0 -0.027 0" rpy="${PI / 2} 0 0" />
+		</xacro:mount_point>
+
 		<gazebo reference="${name}_mesh_link">
 			<material>Gazebo/Green</material>
 		</gazebo>

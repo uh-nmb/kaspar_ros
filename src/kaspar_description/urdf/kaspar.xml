@@ -4,7 +4,7 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="kaspar" xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller" xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface" xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <!-- Constants for robot dimensions -->
+  <!-- Constants -->
   <!-- Import joint description -->
   <!-- Import individual part macros -->
   <material name="trousers">
@@ -18,6 +18,9 @@
   </material>
   <material name="skin">
     <color rgba="1.0 0.850980392157 0.0588235294118 0.95"/>
+  </material>
+  <material name="plastic_green">
+    <color rgba="0.1 0.8 0.3 1"/>
   </material>
   <material name="black">
     <color rgba="0.0 0.0 0.0 1.0"/>
@@ -52,9 +55,9 @@
   </joint>
   <link name="base_link">
     <inertial>
-      <mass value="5"/>
       <origin rpy="0 0 0" xyz="0 0 0.05"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="5"/>
+      <inertia ixx="5.0" ixy="0.0" ixz="0.0" iyy="5.0" iyz="0.0" izz="5.0"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.05"/>
@@ -168,8 +171,8 @@
   </joint>
   <link name="leg_l_link">
     <inertial>
-      <mass value="0.1"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.05"/>
@@ -233,14 +236,14 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <joint name="foot_l_ankle_joint" type="fixed">
-    <origin rpy="0 -1.57079 0" xyz="-0.0125 0 0.025"/>
+    <origin rpy="0 -1.57079632679 0" xyz="-0.0125 0 0.025"/>
     <parent link="foot_l_mount_link"/>
     <child link="foot_l_link"/>
   </joint>
   <link name="foot_l_link">
     <inertial>
-      <mass value="0.01"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.5" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="0.5"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -310,8 +313,8 @@
   </joint>
   <link name="leg_r_link">
     <inertial>
-      <mass value="0.1"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.05"/>
@@ -375,14 +378,14 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <joint name="foot_r_ankle_joint" type="fixed">
-    <origin rpy="0 -1.57079 0" xyz="-0.0125 0 0.025"/>
+    <origin rpy="0 -1.57079632679 0" xyz="-0.0125 0 0.025"/>
     <parent link="foot_r_mount_link"/>
     <child link="foot_r_link"/>
   </joint>
   <link name="foot_r_link">
     <inertial>
-      <mass value="0.01"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.5" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="0.5"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -451,12 +454,13 @@
     <child link="torso_link"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-1.5707" upper="1.5707" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
   </joint>
   <link name="torso_link">
     <inertial>
-      <mass value="5"/>
       <origin rpy="0 0 0" xyz="0 0 0.08"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.08"/>
@@ -495,7 +499,7 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <joint name="torso_arm_l_joint" type="fixed">
-    <origin rpy="-1.57079 0 0" xyz="0 0.08 0.12"/>
+    <origin rpy="-1.57079632679 0 0" xyz="0 0.08 0.12"/>
     <parent link="torso_link"/>
     <child link="torso_arm_l_link"/>
   </joint>
@@ -517,7 +521,7 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <joint name="torso_arm_r_joint" type="fixed">
-    <origin rpy="1.57079 0 0" xyz="0 -0.08 0.12"/>
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.08 0.12"/>
     <parent link="torso_link"/>
     <child link="torso_arm_r_link"/>
   </joint>
@@ -538,6 +542,16 @@
   <gazebo reference="torso_arm_r_link">
     <material>Gazebo/Black</material>
   </gazebo>
+  <transmission name="torso_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="torso_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="torso_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
   <gazebo reference="torso_link">
     <material>Gazebo/White</material>
   </gazebo>
@@ -587,14 +601,15 @@
   </gazebo>
   <link name="arm_r_0_box_link">
     <visual>
-      <geometry name="x01">
-        <box size="0.050 0.038 0.032"/>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
     </visual>
     <inertial>
-      <mass value="0.01"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
     </inertial>
     <collision>
       <geometry name="x01">
@@ -603,7 +618,7 @@
     </collision>
   </link>
   <joint name="arm_r_0_box_bottom_joint" type="fixed">
-    <origin rpy="0 1.57079 0" xyz="0.025 0 0"/>
+    <origin rpy="0 1.57079632679 0" xyz="0.025 0 0"/>
     <parent link="arm_r_0_box_link"/>
     <child link="arm_r_0_box_bottom_link"/>
   </joint>
@@ -624,30 +639,8 @@
   <gazebo reference="arm_r_0_box_bottom_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="arm_r_0_box_top_joint" type="fixed">
-    <origin rpy="0 -1.57079 0" xyz="-0.025 0 0"/>
-    <parent link="arm_r_0_box_link"/>
-    <child link="arm_r_0_box_top_link"/>
-  </joint>
-  <link name="arm_r_0_box_top_link">
-    <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.0001"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
-    </inertial>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.01"/>
-      </geometry>
-      <material name="mount"/>
-    </visual>
-  </link>
-  <gazebo reference="arm_r_0_box_top_link">
-    <material>Gazebo/Black</material>
-  </gazebo>
   <joint name="arm_r_0_box_axel_joint" type="fixed">
-    <origin rpy="1.57075 0 3.14159" xyz="-0.012 0.019 0"/>
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
     <parent link="arm_r_0_box_link"/>
     <child link="arm_r_0_box_axel_link"/>
   </joint>
@@ -669,7 +662,7 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <joint name="arm_r_0_box_joint" type="fixed">
-    <origin rpy="1.57079 0 -1.57079" xyz="0 0 0.019"/>
+    <origin rpy="1.57079632679 0 -1.57079632679" xyz="0 0 0.019"/>
     <parent link="arm_r_0_mount_link"/>
     <child link="arm_r_0_box_link"/>
   </joint>
@@ -691,7 +684,7 @@
     </collision>
   </link>
   <joint name="arm_r_0_axel_joint" type="fixed">
-    <origin rpy="0 0 1.57079" xyz="0 0 0.0025"/>
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
     <parent link="arm_r_0_axel_box_link"/>
     <child link="arm_r_0_axel_link"/>
   </joint>
@@ -712,20 +705,21 @@
   <gazebo reference="arm_r_0_axel_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="arm_r_0_axel_box_joint" type="revolute">
+  <joint name="arm_r_0_joint" type="revolute">
     <parent link="arm_r_0_box_axel_link"/>
     <child link="arm_r_0_axel_box_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="0" lower="-1.5707" upper="1.5707" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
   </joint>
   <transmission name="arm_r_0_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="arm_r_0_joint">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="arm_r_0_motor">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -759,14 +753,15 @@
   </gazebo>
   <link name="arm_r_1_box_link">
     <visual>
-      <geometry name="x01">
-        <box size="0.050 0.038 0.032"/>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
     </visual>
     <inertial>
-      <mass value="0.01"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
     </inertial>
     <collision>
       <geometry name="x01">
@@ -775,7 +770,7 @@
     </collision>
   </link>
   <joint name="arm_r_1_box_back_joint" type="fixed">
-    <origin rpy="1.57079 0 0" xyz="0 0.019 0"/>
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.019 0"/>
     <parent link="arm_r_1_box_link"/>
     <child link="arm_r_1_box_back_link"/>
   </joint>
@@ -796,30 +791,8 @@
   <gazebo reference="arm_r_1_box_back_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="arm_r_1_box_top_joint" type="fixed">
-    <origin rpy="0 -1.57079 0" xyz="-0.025 0 0"/>
-    <parent link="arm_r_1_box_link"/>
-    <child link="arm_r_1_box_top_link"/>
-  </joint>
-  <link name="arm_r_1_box_top_link">
-    <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.0001"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
-    </inertial>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.01"/>
-      </geometry>
-      <material name="mount"/>
-    </visual>
-  </link>
-  <gazebo reference="arm_r_1_box_top_link">
-    <material>Gazebo/Black</material>
-  </gazebo>
   <joint name="arm_r_1_box_axel_joint" type="fixed">
-    <origin rpy="1.57075 0 3.14159" xyz="-0.012 0.019 0"/>
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
     <parent link="arm_r_1_box_link"/>
     <child link="arm_r_1_box_axel_link"/>
   </joint>
@@ -841,7 +814,7 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <joint name="arm_r_1_box_joint" type="fixed">
-    <origin rpy="0 1.57079 0" xyz="0.025 0 0"/>
+    <origin rpy="0 1.57079632679 0" xyz="0 0 0.025"/>
     <parent link="arm_r_1_mount_link"/>
     <child link="arm_r_1_box_link"/>
   </joint>
@@ -863,7 +836,7 @@
     </collision>
   </link>
   <joint name="arm_r_1_axel_joint" type="fixed">
-    <origin rpy="0 0 1.57079" xyz="0 0 0.0025"/>
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
     <parent link="arm_r_1_axel_box_link"/>
     <child link="arm_r_1_axel_link"/>
   </joint>
@@ -884,20 +857,21 @@
   <gazebo reference="arm_r_1_axel_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="arm_r_1_axel_box_joint" type="revolute">
+  <joint name="arm_r_1_joint" type="revolute">
     <parent link="arm_r_1_box_axel_link"/>
     <child link="arm_r_1_axel_box_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="0" lower="-1.5707" upper="1.5707" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
   </joint>
   <transmission name="arm_r_1_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="arm_r_1_joint">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="arm_r_1_motor">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -931,14 +905,15 @@
   </gazebo>
   <link name="arm_r_2_box_link">
     <visual>
-      <geometry name="x01">
-        <box size="0.050 0.038 0.032"/>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
     </visual>
     <inertial>
-      <mass value="0.01"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
     </inertial>
     <collision>
       <geometry name="x01">
@@ -947,7 +922,7 @@
     </collision>
   </link>
   <joint name="arm_r_2_box_back_joint" type="fixed">
-    <origin rpy="1.57079 0 0" xyz="0 0.019 0"/>
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.019 0"/>
     <parent link="arm_r_2_box_link"/>
     <child link="arm_r_2_box_back_link"/>
   </joint>
@@ -968,30 +943,8 @@
   <gazebo reference="arm_r_2_box_back_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="arm_r_2_box_top_joint" type="fixed">
-    <origin rpy="0 -1.57079 0" xyz="-0.025 0 0"/>
-    <parent link="arm_r_2_box_link"/>
-    <child link="arm_r_2_box_top_link"/>
-  </joint>
-  <link name="arm_r_2_box_top_link">
-    <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.0001"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
-    </inertial>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.01"/>
-      </geometry>
-      <material name="mount"/>
-    </visual>
-  </link>
-  <gazebo reference="arm_r_2_box_top_link">
-    <material>Gazebo/Black</material>
-  </gazebo>
   <joint name="arm_r_2_box_axel_joint" type="fixed">
-    <origin rpy="1.57075 0 3.14159" xyz="-0.012 0.019 0"/>
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
     <parent link="arm_r_2_box_link"/>
     <child link="arm_r_2_box_axel_link"/>
   </joint>
@@ -1013,7 +966,7 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <joint name="arm_r_2_box_joint" type="fixed">
-    <origin rpy="0 1.57079 0" xyz="0.025 0 0"/>
+    <origin rpy="0 1.57079632679 0" xyz="0 0 0.025"/>
     <parent link="arm_r_2_mount_link"/>
     <child link="arm_r_2_box_link"/>
   </joint>
@@ -1035,7 +988,7 @@
     </collision>
   </link>
   <joint name="arm_r_2_axel_joint" type="fixed">
-    <origin rpy="0 0 1.57079" xyz="0 0 0.0025"/>
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
     <parent link="arm_r_2_axel_box_link"/>
     <child link="arm_r_2_axel_link"/>
   </joint>
@@ -1056,20 +1009,21 @@
   <gazebo reference="arm_r_2_axel_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="arm_r_2_axel_box_joint" type="revolute">
+  <joint name="arm_r_2_joint" type="revolute">
     <parent link="arm_r_2_box_axel_link"/>
     <child link="arm_r_2_axel_box_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="0" lower="-1.5707" upper="1.5707" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
   </joint>
   <transmission name="arm_r_2_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="arm_r_2_joint">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="arm_r_2_motor">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -1103,14 +1057,15 @@
   </gazebo>
   <link name="arm_r_3_box_link">
     <visual>
-      <geometry name="x01">
-        <box size="0.050 0.038 0.032"/>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
     </visual>
     <inertial>
-      <mass value="0.01"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
     </inertial>
     <collision>
       <geometry name="x01">
@@ -1119,7 +1074,7 @@
     </collision>
   </link>
   <joint name="arm_r_3_box_back_joint" type="fixed">
-    <origin rpy="1.57079 0 0" xyz="0 0.019 0"/>
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.019 0"/>
     <parent link="arm_r_3_box_link"/>
     <child link="arm_r_3_box_back_link"/>
   </joint>
@@ -1140,30 +1095,8 @@
   <gazebo reference="arm_r_3_box_back_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="arm_r_3_box_top_joint" type="fixed">
-    <origin rpy="0 -1.57079 0" xyz="-0.025 0 0"/>
-    <parent link="arm_r_3_box_link"/>
-    <child link="arm_r_3_box_top_link"/>
-  </joint>
-  <link name="arm_r_3_box_top_link">
-    <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.0001"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
-    </inertial>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.01"/>
-      </geometry>
-      <material name="mount"/>
-    </visual>
-  </link>
-  <gazebo reference="arm_r_3_box_top_link">
-    <material>Gazebo/Black</material>
-  </gazebo>
   <joint name="arm_r_3_box_axel_joint" type="fixed">
-    <origin rpy="1.57075 0 3.14159" xyz="-0.012 0.019 0"/>
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
     <parent link="arm_r_3_box_link"/>
     <child link="arm_r_3_box_axel_link"/>
   </joint>
@@ -1185,7 +1118,7 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <joint name="arm_r_3_box_joint" type="fixed">
-    <origin rpy="0 1.57079 0" xyz="0.025 0 0"/>
+    <origin rpy="0 1.57079632679 0" xyz="0 0 0.025"/>
     <parent link="arm_r_3_mount_link"/>
     <child link="arm_r_3_box_link"/>
   </joint>
@@ -1207,7 +1140,7 @@
     </collision>
   </link>
   <joint name="arm_r_3_axel_joint" type="fixed">
-    <origin rpy="0 0 1.57079" xyz="0 0 0.0025"/>
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
     <parent link="arm_r_3_axel_box_link"/>
     <child link="arm_r_3_axel_link"/>
   </joint>
@@ -1228,20 +1161,21 @@
   <gazebo reference="arm_r_3_axel_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="arm_r_3_axel_box_joint" type="revolute">
+  <joint name="arm_r_3_joint" type="revolute">
     <parent link="arm_r_3_box_axel_link"/>
     <child link="arm_r_3_axel_box_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="0" lower="-1.5707" upper="1.5707" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
   </joint>
   <transmission name="arm_r_3_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="arm_r_3_joint">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="arm_r_3_motor">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -1252,8 +1186,8 @@
     <material>Gazebo/White</material>
   </gazebo>
   <joint name="arm_r_hand_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0.10"/>
-    <parent link="arm_r_3_box_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="arm_r_3_axel_link"/>
     <child link="arm_r_hand_link"/>
   </joint>
   <link name="arm_r_hand_link">
@@ -1273,21 +1207,1238 @@
   <gazebo reference="arm_r_hand_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <!-- 
-	<xacro:hand_v0 name="hand_r" parent="torso_arm_r_hand">
-		<origin rpy="0 0 0" xyz="0 0 0" />
-	</xacro:hand_v0>
-	<xacro:arm_v0 name="arm_l" parent="torso_arm_l">
-		<origin rpy="0 0 0" xyz="0 0 0" />
-	</xacro:arm_v0>
-	<xacro:hand_v0 name="hand_l" parent="torso_arm_l_hand">
-		<origin rpy="0 0 0" xyz="0 0 0" />
-	</xacro:hand_v0>
-
-	<xacro:neck_v0 name="neck" parent="torso_top">
-		<origin rpy="0 0 0" xyz="0 0 0" />
-	</xacro:neck_v0>
-	<xacro:head_v0 name="head" parent="neck_top">
-		<origin rpy="0 0 0" xyz="0 0 0" />
-	</xacro:head_v0> -->
+  <joint name="hand_r_mount_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="arm_r_hand_link"/>
+    <child link="hand_r_mount_link"/>
+  </joint>
+  <link name="hand_r_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="hand_r_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="hand_r_wrist_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.0275"/>
+    <parent link="hand_r_mount_link"/>
+    <child link="hand_r_link"/>
+  </joint>
+  <link name="hand_r_link">
+    <inertial>
+      <mass value="0.25"/>
+      <inertia ixx="0.25" ixy="0.0" ixz="0.0" iyy="0.25" iyz="0.0" izz="0.25"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.055" radius="0.015"/>
+      </geometry>
+      <material name="skin"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.055" radius="0.015"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="hand_r_fingers_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.0275"/>
+    <parent link="hand_r_link"/>
+    <child link="hand_r_fingers_link"/>
+  </joint>
+  <link name="hand_r_fingers_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="hand_r_fingers_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="hand_r_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <joint name="arm_l_mount_joint" type="fixed">
+    <origin rpy="0 0 3.14159265359" xyz="0 0 0"/>
+    <parent link="torso_arm_l_link"/>
+    <child link="arm_l_mount_link"/>
+  </joint>
+  <link name="arm_l_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_0_mount_joint" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="arm_l_mount_link"/>
+    <child link="arm_l_0_mount_link"/>
+  </joint>
+  <link name="arm_l_0_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_0_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <link name="arm_l_0_box_link">
+    <visual>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <collision>
+      <geometry name="x01">
+        <box size="0.050 0.038 0.032"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_0_box_bottom_joint" type="fixed">
+    <origin rpy="0 1.57079632679 0" xyz="0.025 0 0"/>
+    <parent link="arm_l_0_box_link"/>
+    <child link="arm_l_0_box_bottom_link"/>
+  </joint>
+  <link name="arm_l_0_box_bottom_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_0_box_bottom_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_0_box_axel_joint" type="fixed">
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
+    <parent link="arm_l_0_box_link"/>
+    <child link="arm_l_0_box_axel_link"/>
+  </joint>
+  <link name="arm_l_0_box_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_0_box_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_0_box_joint" type="fixed">
+    <origin rpy="1.57079632679 0 -1.57079632679" xyz="0 0 0.019"/>
+    <parent link="arm_l_0_mount_link"/>
+    <child link="arm_l_0_box_link"/>
+  </joint>
+  <link name="arm_l_0_axel_box_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+      <material name="plastic_white"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_0_axel_joint" type="fixed">
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
+    <parent link="arm_l_0_axel_box_link"/>
+    <child link="arm_l_0_axel_link"/>
+  </joint>
+  <link name="arm_l_0_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_0_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_0_joint" type="revolute">
+    <parent link="arm_l_0_box_axel_link"/>
+    <child link="arm_l_0_axel_box_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
+  </joint>
+  <transmission name="arm_l_0_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_l_0_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="arm_l_0_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo reference="arm_l_0_box_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="arm_l_0_box_axel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <joint name="arm_l_1_mount_joint" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="arm_l_0_axel_link"/>
+    <child link="arm_l_1_mount_link"/>
+  </joint>
+  <link name="arm_l_1_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_1_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <link name="arm_l_1_box_link">
+    <visual>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <collision>
+      <geometry name="x01">
+        <box size="0.050 0.038 0.032"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_1_box_back_joint" type="fixed">
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.019 0"/>
+    <parent link="arm_l_1_box_link"/>
+    <child link="arm_l_1_box_back_link"/>
+  </joint>
+  <link name="arm_l_1_box_back_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_1_box_back_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_1_box_axel_joint" type="fixed">
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
+    <parent link="arm_l_1_box_link"/>
+    <child link="arm_l_1_box_axel_link"/>
+  </joint>
+  <link name="arm_l_1_box_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_1_box_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_1_box_joint" type="fixed">
+    <origin rpy="0 1.57079632679 0" xyz="0 0 0.025"/>
+    <parent link="arm_l_1_mount_link"/>
+    <child link="arm_l_1_box_link"/>
+  </joint>
+  <link name="arm_l_1_axel_box_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+      <material name="plastic_white"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_1_axel_joint" type="fixed">
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
+    <parent link="arm_l_1_axel_box_link"/>
+    <child link="arm_l_1_axel_link"/>
+  </joint>
+  <link name="arm_l_1_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_1_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_1_joint" type="revolute">
+    <parent link="arm_l_1_box_axel_link"/>
+    <child link="arm_l_1_axel_box_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
+  </joint>
+  <transmission name="arm_l_1_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_l_1_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="arm_l_1_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo reference="arm_l_1_box_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="arm_l_1_box_axel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <joint name="arm_l_2_mount_joint" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="arm_l_1_axel_link"/>
+    <child link="arm_l_2_mount_link"/>
+  </joint>
+  <link name="arm_l_2_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_2_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <link name="arm_l_2_box_link">
+    <visual>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <collision>
+      <geometry name="x01">
+        <box size="0.050 0.038 0.032"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_2_box_back_joint" type="fixed">
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.019 0"/>
+    <parent link="arm_l_2_box_link"/>
+    <child link="arm_l_2_box_back_link"/>
+  </joint>
+  <link name="arm_l_2_box_back_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_2_box_back_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_2_box_axel_joint" type="fixed">
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
+    <parent link="arm_l_2_box_link"/>
+    <child link="arm_l_2_box_axel_link"/>
+  </joint>
+  <link name="arm_l_2_box_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_2_box_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_2_box_joint" type="fixed">
+    <origin rpy="0 1.57079632679 0" xyz="0 0 0.025"/>
+    <parent link="arm_l_2_mount_link"/>
+    <child link="arm_l_2_box_link"/>
+  </joint>
+  <link name="arm_l_2_axel_box_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+      <material name="plastic_white"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_2_axel_joint" type="fixed">
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
+    <parent link="arm_l_2_axel_box_link"/>
+    <child link="arm_l_2_axel_link"/>
+  </joint>
+  <link name="arm_l_2_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_2_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_2_joint" type="revolute">
+    <parent link="arm_l_2_box_axel_link"/>
+    <child link="arm_l_2_axel_box_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
+  </joint>
+  <transmission name="arm_l_2_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_l_2_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="arm_l_2_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo reference="arm_l_2_box_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="arm_l_2_box_axel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <joint name="arm_l_3_mount_joint" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="arm_l_2_axel_link"/>
+    <child link="arm_l_3_mount_link"/>
+  </joint>
+  <link name="arm_l_3_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_3_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <link name="arm_l_3_box_link">
+    <visual>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <collision>
+      <geometry name="x01">
+        <box size="0.050 0.038 0.032"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_3_box_back_joint" type="fixed">
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.019 0"/>
+    <parent link="arm_l_3_box_link"/>
+    <child link="arm_l_3_box_back_link"/>
+  </joint>
+  <link name="arm_l_3_box_back_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_3_box_back_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_3_box_axel_joint" type="fixed">
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
+    <parent link="arm_l_3_box_link"/>
+    <child link="arm_l_3_box_axel_link"/>
+  </joint>
+  <link name="arm_l_3_box_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_3_box_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_3_box_joint" type="fixed">
+    <origin rpy="0 1.57079632679 0" xyz="0 0 0.025"/>
+    <parent link="arm_l_3_mount_link"/>
+    <child link="arm_l_3_box_link"/>
+  </joint>
+  <link name="arm_l_3_axel_box_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+      <material name="plastic_white"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_3_axel_joint" type="fixed">
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
+    <parent link="arm_l_3_axel_box_link"/>
+    <child link="arm_l_3_axel_link"/>
+  </joint>
+  <link name="arm_l_3_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_3_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="arm_l_3_joint" type="revolute">
+    <parent link="arm_l_3_box_axel_link"/>
+    <child link="arm_l_3_axel_box_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
+  </joint>
+  <transmission name="arm_l_3_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_l_3_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="arm_l_3_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo reference="arm_l_3_box_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="arm_l_3_box_axel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <joint name="arm_l_hand_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="arm_l_3_axel_link"/>
+    <child link="arm_l_hand_link"/>
+  </joint>
+  <link name="arm_l_hand_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="arm_l_hand_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="hand_l_mount_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="arm_l_hand_link"/>
+    <child link="hand_l_mount_link"/>
+  </joint>
+  <link name="hand_l_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="hand_l_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="hand_l_wrist_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.0275"/>
+    <parent link="hand_l_mount_link"/>
+    <child link="hand_l_link"/>
+  </joint>
+  <link name="hand_l_link">
+    <inertial>
+      <mass value="0.25"/>
+      <inertia ixx="0.25" ixy="0.0" ixz="0.0" iyy="0.25" iyz="0.0" izz="0.25"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.055" radius="0.015"/>
+      </geometry>
+      <material name="skin"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.055" radius="0.015"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="hand_l_fingers_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.0275"/>
+    <parent link="hand_l_link"/>
+    <child link="hand_l_fingers_link"/>
+  </joint>
+  <link name="hand_l_fingers_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="hand_l_fingers_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="hand_l_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <joint name="neck_mount_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="torso_top_link"/>
+    <child link="neck_mount_link"/>
+  </joint>
+  <link name="neck_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="neck_0_mount_joint" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="neck_mount_link"/>
+    <child link="neck_0_mount_link"/>
+  </joint>
+  <link name="neck_0_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_0_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <link name="neck_0_box_link">
+    <visual>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <collision>
+      <geometry name="x01">
+        <box size="0.050 0.038 0.032"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_0_box_bottom_joint" type="fixed">
+    <origin rpy="0 1.57079632679 0" xyz="0.025 0 0"/>
+    <parent link="neck_0_box_link"/>
+    <child link="neck_0_box_bottom_link"/>
+  </joint>
+  <link name="neck_0_box_bottom_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_0_box_bottom_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="neck_0_box_axel_joint" type="fixed">
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
+    <parent link="neck_0_box_link"/>
+    <child link="neck_0_box_axel_link"/>
+  </joint>
+  <link name="neck_0_box_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_0_box_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="neck_0_box_joint" type="fixed">
+    <origin rpy="1.57079632679 0 -1.57079632679" xyz="0 0 0.019"/>
+    <parent link="neck_0_mount_link"/>
+    <child link="neck_0_box_link"/>
+  </joint>
+  <link name="neck_0_axel_box_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+      <material name="plastic_white"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_0_axel_joint" type="fixed">
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
+    <parent link="neck_0_axel_box_link"/>
+    <child link="neck_0_axel_link"/>
+  </joint>
+  <link name="neck_0_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_0_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="neck_0_joint" type="revolute">
+    <parent link="neck_0_box_axel_link"/>
+    <child link="neck_0_axel_box_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
+  </joint>
+  <transmission name="neck_0_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="neck_0_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="neck_0_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo reference="neck_0_box_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="neck_0_box_axel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <joint name="neck_1_mount_joint" type="fixed">
+    <origin rpy="0 0 3.14159265359" xyz="0 0 0"/>
+    <parent link="neck_0_axel_link"/>
+    <child link="neck_1_mount_link"/>
+  </joint>
+  <link name="neck_1_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_1_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <link name="neck_1_box_link">
+    <visual>
+      <geometry name="x01mesh">
+        <mesh filename="package://herkulex_description/meshes/x01_box_plain.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="plastic_black"/>
+      <origin rpy="3.14159265359 0 0" xyz="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <collision>
+      <geometry name="x01">
+        <box size="0.050 0.038 0.032"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_1_box_back_joint" type="fixed">
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.019 0"/>
+    <parent link="neck_1_box_link"/>
+    <child link="neck_1_box_back_link"/>
+  </joint>
+  <link name="neck_1_box_back_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_1_box_back_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="neck_1_box_axel_joint" type="fixed">
+    <origin rpy="1.57079632679 0 3.14159265359" xyz="-0.012 0.019 0"/>
+    <parent link="neck_1_box_link"/>
+    <child link="neck_1_box_axel_link"/>
+  </joint>
+  <link name="neck_1_box_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_1_box_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="neck_1_box_joint" type="fixed">
+    <origin rpy="0 1.57079632679 0" xyz="0 0 0.025"/>
+    <parent link="neck_1_mount_link"/>
+    <child link="neck_1_box_link"/>
+  </joint>
+  <link name="neck_1_axel_box_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+      <material name="plastic_white"/>
+    </visual>
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.011"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_1_axel_joint" type="fixed">
+    <origin rpy="0 0 1.57079632679" xyz="0 0 0.0025"/>
+    <parent link="neck_1_axel_box_link"/>
+    <child link="neck_1_axel_link"/>
+  </joint>
+  <link name="neck_1_axel_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_1_axel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="neck_1_joint" type="revolute">
+    <parent link="neck_1_box_axel_link"/>
+    <child link="neck_1_axel_box_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="3.14159265359" upper="3.14159265359" velocity="1"/>
+    <dynamics damping="0.01" friction="0.01"/>
+  </joint>
+  <transmission name="neck_1_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="neck_1_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="neck_1_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo reference="neck_1_box_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="neck_1_box_axel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <joint name="neck_top_mount_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="neck_1_axel_link"/>
+    <child link="neck_top_mount_link"/>
+  </joint>
+  <link name="neck_top_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_top_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <link name="neck_top_mesh_link">
+    <visual>
+      <geometry name="mount_mesh">
+        <mesh filename="package://herkulex_description/meshes/mount.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="plastic_green"/>
+    </visual>
+    <inertial>
+      <mass value="0.005"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <joint name="neck_top_mesh_joint" type="fixed">
+    <parent link="neck_top_mount_link"/>
+    <child link="neck_top_mesh_link"/>
+    <origin rpy="3.14159265359 0 0" xyz="0 0 -0.0205"/>
+  </joint>
+  <joint name="neck_top_joint" type="fixed">
+    <origin rpy="1.57079632679 0 0" xyz="0 -0.027 0"/>
+    <parent link="neck_top_mesh_link"/>
+    <child link="neck_top_link"/>
+  </joint>
+  <link name="neck_top_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="neck_top_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="neck_top_mesh_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <joint name="head_mount_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.1"/>
+    <parent link="neck_top_link"/>
+    <child link="head_mount_link"/>
+  </joint>
+  <link name="head_mount_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius="0.01"/>
+      </geometry>
+      <material name="mount"/>
+    </visual>
+  </link>
+  <gazebo reference="head_mount_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <joint name="head_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0.03 0"/>
+    <parent link="head_mount_link"/>
+    <child link="head_link"/>
+  </joint>
+  <link name="head_link">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="skin"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="head_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+      <robotNamespace>/kaspar</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
 </robot>

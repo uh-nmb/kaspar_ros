@@ -1,30 +1,66 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:macro name="arm_v0" params="name parent *origin">
-		<xacro:mount name="${name}_mount" parent="${parent}">
+	<xacro:macro name="hand_v0" params="name parent *origin">
+		<xacro:mount_point name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
-		</xacro:mount>
+		</xacro:mount_point>
 
-		<xacro:drs_x01 name="${name}_0" mountTop="false" mountBottom="false" mountBack="true" mountAxel="false" parent="${name}_mount"
-			minPosition="0" maxPosition="PI" maxVelocity="1">
-			<origin xyz="0 0 0" />
-		</xacro:drs_x01>
-		<xacro:drs_x01 name="${name}_1" parent="${name}_0_axel" mountTop="false" mountBottom="true" mountBack="false" mountAxel="false"
-			minPosition="0" maxPosition="PI" maxVelocity="1">
-			<origin xyz="0 0 0" />
-		</xacro:drs_x01>
-		<xacro:drs_x01 name="${name}_2" parent="${name}_1_axel" mountTop="false" mountBottom="true" mountBack="false" mountAxel="false"
-			minPosition="0" maxPosition="PI" maxVelocity="1">
-			<origin xyz="0 0 0" />
-		</xacro:drs_x01>
-		<xacro:drs_x01 name="${name}_3" parent="${name}_2_axel" mountTop="false" mountBottom="true" mountBack="false" mountAxel="false"
-			minPosition="0" maxPosition="PI" maxVelocity="1">
-			<origin xyz="0 0 0" />
-		</xacro:drs_x01>
-		<xacro:mount name="${name}_hand" parent="${name}_3_box">
-			<origin rpy="0 0 0" xyz="0 0 0.10" />
-		</xacro:mount>
+		<joint name="${name}_wrist_joint" type="fixed">
+			<origin rpy="0 0 0" xyz="0 0 0.0275" />
+			<parent link="${name}_mount_link" />
+			<child link="${name}_link" />
+		</joint>
+		<link name="${name}_link">
+			<inertial>
+				<mass value="0.25" />
+				<inertia ixx="0.25" ixy="0.0" ixz="0.0" iyy="0.25" iyz="0.0" izz="0.25" />
+			</inertial>
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<cylinder length="0.055" radius="0.015" />
+				</geometry>
+				<material name="skin" />
+			</visual>
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<cylinder length="0.055" radius="0.015" />
+				</geometry>
+			</collision>
+		</link>
+		<xacro:mount_point name="${name}_fingers" parent="${name}">
+			<origin rpy="0 0 0" xyz="0 0 0.0275" />
+		</xacro:mount_point>
+
+		<gazebo reference="${name}_link">
+			<material>Gazebo/Yellow</material>
+		</gazebo>
 	</xacro:macro>
 
-	<xacro:macro name="hand_v0" params="name parent *origin"></xacro:macro>
+	<xacro:macro name="arm_v0" params="name parent *origin">
+		<xacro:mount_point name="${name}_mount" parent="${parent}">
+			<insert_block name="origin" />
+		</xacro:mount_point>
+
+		<xacro:drs_x01 name="${name}_0" mountBottom="false" mountBack="true" mountAxel="false" parent="${name}_mount" minPosition="${PI}"
+			maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" />
+		</xacro:drs_x01>
+		<xacro:drs_x01 name="${name}_1" parent="${name}_0_axel" mountBottom="true" mountBack="false" mountAxel="false" minPosition="${PI}"
+			maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" />
+		</xacro:drs_x01>
+		<xacro:drs_x01 name="${name}_2" parent="${name}_1_axel" mountBottom="true" mountBack="false" mountAxel="false" minPosition="${PI}"
+			maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" />
+		</xacro:drs_x01>
+		<xacro:drs_x01 name="${name}_3" parent="${name}_2_axel" mountBottom="true" mountBack="false" mountAxel="false" minPosition="${PI}"
+			maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" />
+		</xacro:drs_x01>
+		<xacro:mount_point name="${name}_hand" parent="${name}_3_axel">
+			<origin rpy="0 0 0" xyz="0 0 0" />
+		</xacro:mount_point>
+	</xacro:macro>
 </robot>
