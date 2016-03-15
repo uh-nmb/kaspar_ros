@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller" xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-	xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<xacro:macro name="drs_x01" params="name parent mountBottom mountBack mountAxel minPosition maxPosition maxVelocity *origin">
+	<xacro:macro name="drs_x01" params="name parent mountBottom mountBack mountLeft mountRight mountAxel minPosition maxPosition maxVelocity *origin">
 		<xacro:mount_point name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
 		</xacro:mount_point>
 
-		<xacro:__drs_x01_box skipBottom="${mountBottom}" skipAxel="${mountAxel}" skipBack="${mountBack}"
-			name="${name}" />
+		<!-- TODO: Jade would make this much easier, as string comparison functions are possible. i.e. "${mount=='bottom'}" -->
+		<xacro:__drs_x01_box skipBottom="${mountBottom}" skipAxel="${mountAxel}" skipBack="${mountBack}" skipLeft="${mountLeft}"
+			skipRight="${mountRight}" name="${name}" />
 
 		<joint name="${name}_box_joint" type="fixed">
 			<xacro:if value="${mountBack}">
-				<origin xyz="0 0 0.019" rpy="${PI / 2} 0 -${PI / 2}" />
+				<origin xyz="0.008 0 0.019" rpy="${PI / 2} 0 0" />
 			</xacro:if>
 			<xacro:if value="${mountBottom}">
 				<origin xyz="0 0 0.025" rpy="0 ${PI / 2} 0" />
+			</xacro:if>			
+			<xacro:if value="${mountLeft}">
+				<origin xyz="0 -0.007 0.016" rpy="${PI} 0 ${PI / 2}" />
 			</xacro:if>
-			<xacro:if value="${mountAxel}">
-				<origin xyz="-0.012 0 0.019" rpy="${PI / 2} 0 0" />
+			<xacro:if value="${mountRight}">
+				<origin xyz="0 0.007 0.016" rpy="0 0 -${PI / 2}" />
 			</xacro:if>
-
+			
 			<xacro:if value="${mountAxel}">
+				<origin xyz="0.0125 0 0.019" rpy="-${PI / 2} 0 0" />
 				<parent link="${name}_box_axel_link" />
 			</xacro:if>
 			<xacro:unless value="${mountAxel}">
@@ -68,7 +72,7 @@
 		</gazebo>
 	</xacro:macro>
 
-	<xacro:macro name="__drs_x01_box" params="name skipBack skipBottom skipAxel">
+	<xacro:macro name="__drs_x01_box" params="name skipBack skipBottom skipLeft skipRight skipAxel">
 		<link name="${name}_box_link">
 			<visual>
 				<geometry name="x01mesh">
@@ -90,7 +94,7 @@
 
 		<xacro:unless value="${skipBack}">
 			<xacro:mount_point name="${name}_box_back" parent="${name}_box">
-				<origin xyz="0 -0.019 0" rpy="${PI / 2} 0 0" />
+				<origin xyz="0.007 -0.019 0" rpy="${PI / 2} 0 0" />
 			</xacro:mount_point>
 		</xacro:unless>
 		<xacro:unless value="${skipBottom}">
@@ -98,11 +102,22 @@
 				<origin xyz="0.025 0 0" rpy="0 ${PI / 2} 0" />
 			</xacro:mount_point>
 		</xacro:unless>
-		<xacro:unless value="${skipAxel}">
-			<xacro:mount_point name="${name}_box_axel" parent="${name}_box">
-				<origin xyz="-0.012 0.019 0" rpy="${PI / 2} 0 ${PI}" />
+		<xacro:unless value="${skipLeft}">
+			<xacro:mount_point name="${name}_box_left" parent="${name}_box">
+				<origin xyz="0.007 0 0.016" rpy="0 0 0" />
 			</xacro:mount_point>
 		</xacro:unless>
+		<xacro:unless value="${skipRight}">
+			<xacro:mount_point name="${name}_box_right" parent="${name}_box">
+				<origin xyz="0.007 0 -0.016" rpy="-${PI} 0 0" />
+			</xacro:mount_point>
+		</xacro:unless>		
+		<xacro:unless value="${skipAxel}">
+			<xacro:mount_point name="${name}_box_axel" parent="${name}_box">
+				<origin xyz="-0.0125 0.019 0" rpy="${PI / 2} 0 ${PI}" />
+			</xacro:mount_point>
+		</xacro:unless>
+		
 		<xacro:if value="${skipAxel}">
 			<link name="${name}_box_axel_link">
 				<visual>
@@ -137,12 +152,12 @@
 
 		<xacro:if value="${mountAxel}">
 			<xacro:mount_point name="${name}_axel" parent="${name}_mount">
-				<origin xyz="0 0 -0.0025" rpy="0 0 0" />
+				<origin xyz="0 0 0.005" rpy="0 0 0" />
 			</xacro:mount_point>
 			<joint name="${name}_axel0_joint" type="fixed">
 				<parent link="${name}_axel_link" />
 				<child link="${name}_axel_box_link" />
-				<origin xyz="0 0 0" rpy="0 0 ${PI / 2}" />
+				<origin xyz="0 0 -0.0025" rpy="0 0 ${PI / 2}" />
 			</joint>
 		</xacro:if>
 		<xacro:unless value="${mountAxel}">

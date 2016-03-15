@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:macro name="mount_point" params="name parent *origin">	
+	<xacro:property name="VISIBLE_MOUNTS" value="true" />
+
+	<xacro:macro name="mount_point" params="name parent *origin">
 		<joint name="${name}_joint" type="fixed">
 			<insert_block name="origin" />
 			<parent link="${parent}_link" />
@@ -13,16 +15,20 @@
 				<mass value="0.0001" />
 				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
 			</inertial>
-			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<cylinder length="0.001" radius="0.01" />
-				</geometry>
-				<material name="mount" />
-			</visual>
+			<xacro:if value="${VISIBLE_MOUNTS}">
+				<visual>
+					<origin xyz="0 0 0" rpy="0 0 0" />
+					<geometry>
+						<cylinder length="0.001" radius="0.01" />
+					</geometry>
+					<material name="mount" />
+				</visual>
+			</xacro:if>
 		</link>
-		<gazebo reference="${name}_link">
-			<material>Gazebo/Black</material>
-		</gazebo>
+		<xacro:if value="${VISIBLE_MOUNTS}">
+			<gazebo reference="${name}_link">
+				<material>Gazebo/Black</material>
+			</gazebo>
+		</xacro:if>
 	</xacro:macro>
 </robot>

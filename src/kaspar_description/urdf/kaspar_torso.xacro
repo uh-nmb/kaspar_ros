@@ -39,10 +39,10 @@
 			<origin rpy="0 0 0" xyz="0 0 0.155" />
 		</xacro:mount_point>
 		<xacro:mount_point name="${name}_arm_l" parent="${name}">
-			<origin rpy="-${PI / 2} 0 0" xyz="0 0.08 0.12" />
+			<origin rpy="-${PI / 2} -${PI / 2} 0" xyz="0 0.08 0.12" />
 		</xacro:mount_point>
 		<xacro:mount_point name="${name}_arm_r" parent="${name}">
-			<origin rpy="${PI / 2} 0 0" xyz="0 -0.08 0.12" />
+			<origin rpy="${PI / 2} ${PI / 2} 0" xyz="0 -0.08 0.12" />
 		</xacro:mount_point>
 
 		<!-- Gazebo Config -->

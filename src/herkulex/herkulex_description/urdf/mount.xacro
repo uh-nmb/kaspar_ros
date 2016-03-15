@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:macro name="mount_v0" params="name parent *origin">
+	<xacro:macro name="mount_v0" params="name invert parent *origin">
 		<xacro:mount_point name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
 		</xacro:mount_point>
@@ -22,11 +22,21 @@
 		<joint name="${name}_mesh_joint" type="fixed">
 			<parent link="${name}_mount_link" />
 			<child link="${name}_mesh_link" />
-			<origin rpy="${PI} 0 0" xyz="0 0 -0.0205" />
+			<xacro:unless value="${invert}">
+				<origin rpy="${PI} 0 0" xyz="0 0 -0.0205" />
+			</xacro:unless>
+			<xacro:if value="${invert}">
+				<origin rpy="${PI / 2} 0 0" xyz="0 0 0.027" />
+			</xacro:if>
 		</joint>
 
 		<xacro:mount_point name="${name}" parent="${name}_mesh">
-			<origin xyz="0 -0.027 0" rpy="${PI / 2} 0 0" />
+			<xacro:unless value="${invert}">
+				<origin xyz="0 -0.027 0" rpy="${PI / 2} 0 0" />
+			</xacro:unless>
+			<xacro:if value="${invert}">
+				<origin xyz="0 0 0.0205" rpy="0 -${PI} 0" />
+			</xacro:if>
 		</xacro:mount_point>
 
 		<gazebo reference="${name}_mesh_link">

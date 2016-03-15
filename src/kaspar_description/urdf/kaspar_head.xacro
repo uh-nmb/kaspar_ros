@@ -4,7 +4,7 @@
 		<xacro:mount_point name="${name}_mount" parent="${parent}">
 			<insert_block name="origin" />
 		</xacro:mount_point>
-		
+
 		<joint name="${name}_joint" type="fixed">
 			<origin rpy="0 0 0" xyz="0 0 0.09" />
 			<parent link="${name}_mount_link" />
@@ -23,11 +23,11 @@
 				</geometry>
 			</collision>
 		</link>
-		
+
 		<xacro:mount_point name="${name}_top" parent="${name}">
 			<origin xyz="0 0 0.08" rpy="0 0 0" />
 		</xacro:mount_point>
-		
+
 		<gazebo reference="${name}_link">
 			<material>Gazebo/Yellow</material>
 		</gazebo>
@@ -38,15 +38,15 @@
 			<insert_block name="origin" />
 		</xacro:mount_point>
 
-		<xacro:drs_x01 name="${name}_0" mountBottom="false" mountBack="true" mountAxel="false" parent="${name}_mount" minPosition="${PI}"
-			maxPosition="${PI}" maxVelocity="1">
+		<xacro:drs_x01 name="${name}_0" parent="${name}_mount" mountBottom="false" mountBack="true" mountLeft="false" mountRight="false"
+			mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
 			<origin xyz="0 0 0" />
 		</xacro:drs_x01>
-		<xacro:drs_x01 name="${name}_1" parent="${name}_0_axel" mountBottom="true" mountBack="false" mountAxel="false" minPosition="${PI}"
-			maxPosition="${PI}" maxVelocity="1">
-			<origin xyz="0 0 0" rpy="0 0 ${PI}" />
+		<xacro:drs_x01 name="${name}_1" parent="${name}_0_axel" mountBottom="true" mountBack="false" mountLeft="false" mountRight="false"
+			mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" rpy="0 0 -${PI / 2}" />
 		</xacro:drs_x01>
-		<xacro:mount_v0 name="${name}_top" parent="${name}_1_axel">
+		<xacro:mount_v0 name="${name}_top" parent="${name}_1_axel" invert="false">
 			<origin rpy="0 0 0" xyz="0 0 0" />
 		</xacro:mount_v0>
 

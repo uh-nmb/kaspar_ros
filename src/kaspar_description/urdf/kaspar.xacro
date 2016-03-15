@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <robot name="kaspar" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<!-- Constants -->
-	<xacro:property name="PI" value="3.1415926535897931" />
-
 	<!-- Import joint description -->
 	<xacro:include filename="$(find herkulex_description)/urdf/drs_x01.xacro" />
 	<xacro:include filename="$(find herkulex_description)/urdf/mount.xacro" />
@@ -16,6 +13,10 @@
 
 	<xacro:include filename="$(find kaspar_description)/urdf/kaspar_mount.xacro" />
 	<xacro:include filename="$(find kaspar_description)/urdf/materials.xacro" />
+
+	<!-- Constants -->
+	<xacro:property name="PI" value="3.1415926535897931" />
+	<xacro:property name="VISIBLE_MOUNTS" value="true" />
 
 	<!-- Used for fixing robot in the world -->
 	<link name="world_link" />
@@ -57,11 +58,11 @@
 	<xacro:head_v0 name="head" parent="neck_top">
 		<origin rpy="0 0 0" xyz="0 0 0" />
 	</xacro:head_v0>
-  <!-- ros_control plugin -->
-  <gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/kaspar</robotNamespace>
-      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-    </plugin>
-  </gazebo>
+	<!-- ros_control plugin -->
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>/kaspar</robotNamespace>
+			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+		</plugin>
+	</gazebo>
 </robot>
