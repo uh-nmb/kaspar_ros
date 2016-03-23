@@ -5,12 +5,12 @@ project(herkulex_driver)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  rospy
-  std_msgs
+  roscpp
+  serial
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system python-serial)
+# find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -66,7 +66,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   std_msgs
+#   std_msgs  # Or other packages containing msgs
 # )
 
 ################################################
@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES herkulex_driver
-#  CATKIN_DEPENDS python-serial rospy std_msgs
+#  CATKIN_DEPENDS roscpp serial
 #  DEPENDS system_lib
 )
 
@@ -117,14 +117,16 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(herkulex_driver
-#   src/${PROJECT_NAME}/herkulex_driver.cpp
-# )
+add_library(${PROJECT_NAME}
+   src/herkulex.cpp
+   include/herkulex.h
+   include/t_adc.h
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(herkulex_driver ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 # add_executable(herkulex_driver_node src/herkulex_driver_node.cpp)
