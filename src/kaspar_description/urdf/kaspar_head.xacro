@@ -38,15 +38,19 @@
 			<insert_block name="origin" />
 		</xacro:mount_point>
 
-		<xacro:drs_x01 name="${name}_0" parent="${name}_mount" mountBottom="false" mountBack="true" mountLeft="false" mountRight="false"
+		<xacro:drs_x01 name="${name}_yaw" parent="${name}_mount" mountBottom="false" mountBack="true" mountLeft="false" mountRight="false"
 			mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
 			<origin xyz="0 0 0" />
 		</xacro:drs_x01>
-		<xacro:drs_x01 name="${name}_1" parent="${name}_0_axel" mountBottom="true" mountBack="false" mountLeft="false" mountRight="false"
+		<xacro:drs_x01 name="${name}_pitch" parent="${name}_yaw_axel" mountBottom="true" mountBack="false" mountLeft="false" mountRight="false"
 			mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
 			<origin xyz="0 0 0" rpy="0 0 -${PI / 2}" />
 		</xacro:drs_x01>
-		<xacro:mount_v0 name="${name}_top" parent="${name}_1_axel" invert="false">
+		<xacro:drs_x01 name="${name}_roll" parent="${name}_pitch_axel" mountBottom="true" mountBack="false" mountLeft="false" mountRight="false"
+			mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" rpy="0 0 -${PI / 2}" />
+		</xacro:drs_x01>
+		<xacro:mount_v0 name="${name}_top" parent="${name}_roll_axel" invert="false">
 			<origin rpy="0 0 0" xyz="0 0 0" />
 		</xacro:mount_v0>
 

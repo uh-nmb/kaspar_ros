@@ -1,5 +1,5 @@
-#ifndef T_ADC_H
-#define T_ADC_H
+#ifndef HERKULEX_DRIVER__T_ADC_H
+#define HERKULEX_DRIVER__T_ADC_H
 
 #include <map>
 
@@ -256,4 +256,4 @@ struct T_ADC {
 	}
 };
 
-#endif // T_ADC_H
+#endif // HERKULEX_DRIVER__T_ADC_H

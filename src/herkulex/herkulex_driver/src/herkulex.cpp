@@ -3,7 +3,7 @@
 #include <ros/ros.h>
 #include <serial/serial.h>
 
-#include "../include/herkulex.h"
+#include <herkulex_driver/herkulex.h>
 
 namespace herkulex {
 const T_ADC::ADC_MAP HerkuleX::t_adc = T_ADC::get_map();

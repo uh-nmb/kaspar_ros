@@ -43,26 +43,30 @@
 			<insert_block name="origin" />
 		</xacro:mount_point>
 
-		<xacro:drs_x01 name="${name}_0" parent="${name}_mount" mountBottom="false" mountBack="true" mountLeft="false" mountRight="false"
-			mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
+		<xacro:drs_x01 name="${name}_shoulder_roll_upper" parent="${name}_mount" mountBottom="false" mountBack="true" mountLeft="false"
+			mountRight="false" mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
 			<origin xyz="0 0 0" />
 		</xacro:drs_x01>
-		<xacro:mount_v0 name="${name}_0_joint" parent="${name}_0_axel" invert="true">
+		<xacro:mount_v0 name="${name}_shoulder_roll_pitch" parent="${name}_shoulder_roll_upper_axel" invert="true">
 			<origin rpy="0 0 0" xyz="0 0 0" />
 		</xacro:mount_v0>
-		<xacro:drs_x01 name="${name}_1" parent="${name}_0_joint" mountBottom="false" mountBack="false" mountLeft="false" mountRight="false"
-			mountAxel="true" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
+		<xacro:drs_x01 name="${name}_shoulder_pitch" parent="${name}_shoulder_roll_pitch" mountBottom="true" mountBack="false"
+			mountLeft="false" mountRight="false" mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
 			<origin xyz="0 0 0" />
 		</xacro:drs_x01>
-		<xacro:drs_x01 name="${name}_2" parent="${name}_1_axel" mountBottom="true" mountBack="false" mountLeft="false" mountRight="false"
-			mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
+		<xacro:drs_x01 name="${name}_shoulder_roll_lower" parent="${name}_shoulder_pitch_axel" mountBottom="false" mountBack="false"
+			mountLeft="false" mountRight="false" mountAxel="true" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
 			<origin xyz="0 0 0" />
 		</xacro:drs_x01>
-		<xacro:drs_x01 name="${name}_3" parent="${name}_2_axel" mountBottom="true" mountBack="false" mountLeft="false" mountRight="false"
-			mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
+		<xacro:drs_x01 name="${name}_elbow" parent="${name}_shoulder_roll_lower_axel" mountBottom="true" mountBack="false" mountLeft="false"
+			mountRight="false" mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
 			<origin xyz="0 0 0" />
 		</xacro:drs_x01>
-		<xacro:mount_point name="${name}_hand" parent="${name}_3_axel">
+		<xacro:drs_x01 name="${name}_wrist_roll" parent="${name}_elbow_axel" mountBottom="true" mountBack="false" mountLeft="false"
+			mountRight="false" mountAxel="false" minPosition="${PI}" maxPosition="${PI}" maxVelocity="1">
+			<origin xyz="0 0 0" />
+		</xacro:drs_x01>
+		<xacro:mount_point name="${name}_hand" parent="${name}_wrist_axel">
 			<origin rpy="0 0 0" xyz="0 0 0" />
 		</xacro:mount_point>
 	</xacro:macro>

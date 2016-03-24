@@ -1,5 +1,5 @@
-#ifndef HERKULEX_H
-#define HERKULEX_H
+#ifndef HERKULEX_DRIVER__HERKULEX_H
+#define HERKULEX_DRIVER__HERKULEX_H
 
 #include <ros/ros.h>
 #include <serial/serial.h>
@@ -294,4 +294,4 @@ private:
 };
 }
 
-#endif //HERKULEX_H
+#endif //HERKULEX_DRIVER__HERKULEX_H

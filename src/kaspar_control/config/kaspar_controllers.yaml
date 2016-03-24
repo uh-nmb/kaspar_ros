@@ -1,0 +1,27 @@
+# Settings for ros_control control loop
+generic_hw_control_loop:
+  loop_hz: 300
+  cycle_time_error_threshold: 0.01
+
+# Settings for ros_control hardware interface
+hardware_interface:
+  joints:
+  - arm_r_shoulder_roll_upper_joint
+  - arm_r_shoulder_pitch_joint
+  - arm_r_shoulder_roll_lower_joint
+  - arm_r_elbow_joint
+  - arm_r_wrist_roll_joint
+  - arm_l_shoulder_roll_upper_joint
+  - arm_l_shoulder_pitch_joint
+  - arm_l_shoulder_roll_lower_joint
+  - arm_l_elbow_joint
+  - arm_l_wrist_roll_joint
+  - torso_yaw_joint
+  - head_yaw_joint
+  - head_pitch_joint
+  - head_roll_joint
+
+# Publish joint states
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50

@@ -1,0 +1,69 @@
+# TODO: PID gains are guesses using the following assumptions
+# HerkuleX default KpKiKd defaults
+# HerkuleX defaults have a range of [0:0x7FFF]
+# Ranges of p:[0:1000],i[0:100],d[0:100] found in dynamic_reconfigure are valid
+# Someone with more time/pid knowledge should likely verify these values
+
+# Right arm
+arm_r_shoulder_roll_upper_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_r_shoulder_roll_upper_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+arm_r_shoulder_pitch_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_r_shoulder_pitch_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+arm_r_shoulder_roll_lower_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_r_shoulder_roll_lower_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+arm_r_elbow_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_r_elbow_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+arm_r_wrist_roll_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_r_wrist_roll_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+
+# Left arm
+arm_l_shoulder_roll_upper_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_l_shoulder_roll_upper_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+arm_l_shoulder_pitch_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_l_shoulder_pitch_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+arm_l_shoulder_roll_lower_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_l_shoulder_roll_lower_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+arm_l_elbow_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_l_elbow_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+arm_l_wrist_roll_controller:
+  type: effort_controllers/JointPositionController
+  joint: arm_l_wrist_roll_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+
+# Torso
+torso_yaw_controller:
+  type: effort_controllers/JointPositionController
+  joint: torso_yaw_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+
+# Head
+head_yaw_controller:
+  type: effort_controllers/JointPositionController
+  joint: head_yaw_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+head_pitch_controller:
+  type: effort_controllers/JointPositionController
+  joint: head_pitch_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }
+head_roll_controller:
+  type: effort_controllers/JointPositionController
+  joint: head_roll_joint
+  pid: { p: 13.43, i: 0.0, d: 24.42, i_clamp: 1 }

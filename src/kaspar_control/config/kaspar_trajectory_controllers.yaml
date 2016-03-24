@@ -1,0 +1,35 @@
+arm_r_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+  - arm_r_shoulder_roll_upper_joint
+  - arm_r_shoulder_pitch_joint
+  - arm_r_shoulder_roll_lower_joint
+  - arm_r_elbow_joint
+  - arm_r_wrist_roll_joint
+arm_l_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+  - arm_l_shoulder_roll_upper_joint
+  - arm_l_shoulder_pitch_joint
+  - arm_l_shoulder_roll_lower_joint
+  - arm_l_elbow_joint
+  - arm_l_wrist_roll_joint
+head_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+  - head_yaw_joint
+  - head_pitch_joint
+  - head_roll_joint
+body_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+  - torso_yaw_joint
+#face_controller:
+#  type: position_controllers/JointTrajectoryController
+#  joints:
+#  - mouth_open_joint
+#  - mouth_smile_joint
+#  - eyes_open_joint
+#  - eyes_lids_joint
+#  - eyes_pitch_joint
+#  - eyes_yaw_joint

@@ -6,7 +6,7 @@
 			<insert_block name="origin" />
 		</xacro:mount_point>
 
-		<joint name="${name}_joint" type="revolute">
+		<joint name="${name}_yaw_joint" type="revolute">
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<parent link="${name}_mount_link" />
 			<child link="${name}_link" />
@@ -46,12 +46,12 @@
 		</xacro:mount_point>
 
 		<!-- Gazebo Config -->
-		<transmission name="${name}_trans">
+		<transmission name="${name}_yaw_trans">
 			<type>transmission_interface/SimpleTransmission</type>
-			<joint name="${name}_joint">
+			<joint name="${name}_yaw_joint">
 				<hardwareInterface>EffortJointInterface</hardwareInterface>
 			</joint>
-			<actuator name="${name}_motor">
+			<actuator name="${name}_yaw_motor">
 				<hardwareInterface>EffortJointInterface</hardwareInterface>
 				<mechanicalReduction>1</mechanicalReduction>
 			</actuator>

@@ -99,10 +99,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES herkulex_driver
-#  CATKIN_DEPENDS roscpp serial
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES herkulex_driver
+  CATKIN_DEPENDS roscpp serial
+  DEPENDS Boost
 )
 
 ###########
@@ -113,14 +113,13 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}
    src/herkulex.cpp
-   include/herkulex.h
-   include/t_adc.h
 )
 
 ## Add cmake target dependencies of the library
@@ -155,18 +154,17 @@ add_library(${PROJECT_NAME}
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS herkulex_driver herkulex_driver_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS ${PROJECT_NAME}
+   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
+install(DIRECTORY include/${PROJECT_NAME}
+   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+   PATTERN ".svn" EXCLUDE
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
